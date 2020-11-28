@@ -1,0 +1,32 @@
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.4.0"
+    id "application"
+    id "org.jlleitschuh.gradle.ktlint" version "9.2.1"
+}
+
+group 'org.example'
+version '0.1.2'
+
+mainClassName = "MainKt"
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile group: "org.jetbrains.kotlin", name: "kotlin-stdlib", version: "1.4.0"
+    compile group: "org.apache.pdfbox", name: "pdfbox", version: "2.0.17"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'MainKt'
+    }
+
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
